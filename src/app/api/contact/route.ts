@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
+import { rateLimit } from "@/lib/rate-limit";
 
 const resend = new Resend(process.env.RESEND_API_KEY!);
 const CONTACT_EMAIL = process.env.CONTACT_EMAIL!;
@@ -14,6 +15,14 @@ interface ContactBody {
 
 export async function POST(request: Request) {
   try {
+    const ip = request.headers.get("x-forwarded-for") || "anonymous";
+    if (!rateLimit(ip, 5, 60000)) {
+      return NextResponse.json(
+        { error: "Too many requests. Please try again later." },
+        { status: 429 }
+      );
+    }
+
     const body: ContactBody = await request.json();
 
     if (!body.name || !body.email || !body.projectType || !body.message) {

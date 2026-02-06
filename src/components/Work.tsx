@@ -35,7 +35,13 @@ export default function Work() {
               onClick={() => setSelected(project)}
               className="group relative aspect-video overflow-hidden rounded-xl bg-bg-card text-left"
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-accent/20 to-bg-card transition-transform group-hover:scale-105" />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={project.thumbnailUrl}
+                alt={project.title}
+                className="absolute inset-0 h-full w-full object-cover transition-transform group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-br from-accent/20 to-bg-card" />
               <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-black/70 to-transparent p-4">
                 <h3 className="text-lg font-semibold text-text-heading">
                   {project.title}

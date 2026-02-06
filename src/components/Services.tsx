@@ -1,18 +1,35 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { services } from "@/data/services";
 
 export default function Services() {
+  const [checkoutError, setCheckoutError] = useState<string | null>(null);
+
   const handleBookNow = async (serviceId: string) => {
-    const res = await fetch("/api/checkout", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ serviceId }),
-    });
-    const data = await res.json();
-    if (data.url) {
-      window.location.href = data.url;
+    setCheckoutError(null);
+    try {
+      const res = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ serviceId }),
+      });
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        setCheckoutError(data.error || "Failed to start checkout. Please try again.");
+        return;
+      }
+
+      const data = await res.json();
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        setCheckoutError("Failed to start checkout. Please try again.");
+      }
+    } catch {
+      setCheckoutError("Network error. Please check your connection and try again.");
     }
   };
 
@@ -80,7 +97,7 @@ export default function Services() {
                 </button>
               ) : (
                 <a
-                  href="#contact"
+                  href="#contact?type=custom"
                   className="mt-8 block w-full rounded-lg border border-accent py-3 text-center font-semibold text-accent transition-colors hover:bg-accent/10"
                 >
                   {service.cta}
@@ -89,6 +106,12 @@ export default function Services() {
             </motion.div>
           ))}
         </div>
+
+        {checkoutError && (
+          <p className="mt-6 text-center text-sm text-red-400">
+            {checkoutError}
+          </p>
+        )}
       </div>
     </section>
   );

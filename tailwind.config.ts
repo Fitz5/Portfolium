@@ -14,7 +14,7 @@ const config: Config = {
         "text-body": "#a0a0a0",
       },
       fontFamily: {
-        sans: ["Inter", "system-ui", "sans-serif"],
+        sans: ["var(--font-inter)", "system-ui", "sans-serif"],
       },
     },
   },

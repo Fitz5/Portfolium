@@ -1,9 +1,18 @@
 import { NextResponse } from "next/server";
 import { stripe } from "@/lib/stripe";
 import { services } from "@/data/services";
+import { rateLimit } from "@/lib/rate-limit";
 
 export async function POST(request: Request) {
   try {
+    const ip = request.headers.get("x-forwarded-for") || "anonymous";
+    if (!rateLimit(ip, 10, 60000)) {
+      return NextResponse.json(
+        { error: "Too many requests. Please try again later." },
+        { status: 429 }
+      );
+    }
+
     const { serviceId } = await request.json();
 
     const service = services.find((s) => s.id === serviceId);
@@ -13,6 +22,12 @@ export async function POST(request: Request) {
         { status: 400 }
       );
     }
+
+    const origin =
+      request.headers.get("origin") ||
+      request.headers.get("referer")?.replace(/\/[^/]*$/, "") ||
+      process.env.NEXT_PUBLIC_BASE_URL ||
+      "http://localhost:3000";
 
     const session = await stripe.checkout.sessions.create({
       line_items: [
@@ -29,8 +44,8 @@ export async function POST(request: Request) {
         },
       ],
       mode: "payment",
-      success_url: `${request.headers.get("origin")}/thank-you`,
-      cancel_url: `${request.headers.get("origin")}/#services`,
+      success_url: `${origin}/thank-you`,
+      cancel_url: `${origin}/#services`,
     });
 
     return NextResponse.json({ url: session.url });
