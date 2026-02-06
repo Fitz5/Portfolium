@@ -5,17 +5,15 @@ import { motion } from "framer-motion";
 export default function Hero() {
   return (
     <section className="relative flex h-screen items-center justify-center overflow-hidden">
-      {/* Background video — replace src with your own reel */}
-      <video
-        autoPlay
-        loop
-        muted
-        playsInline
-        className="absolute inset-0 h-full w-full object-cover"
-        poster="/hero-poster.jpg"
-      >
-        <source src="/hero-reel.mp4" type="video/mp4" />
-      </video>
+      {/* Background video via YouTube embed */}
+      <div className="pointer-events-none absolute inset-0">
+        <iframe
+          src="https://www.youtube.com/embed/svyvU6WvOcI?autoplay=1&mute=1&loop=1&playlist=svyvU6WvOcI&controls=0&showinfo=0&modestbranding=1&rel=0&playsinline=1&disablekb=1"
+          title="Hero background video"
+          allow="autoplay; encrypted-media"
+          className="absolute left-1/2 top-1/2 h-[56.25vw] min-h-full w-screen min-w-[177.78vh] -translate-x-1/2 -translate-y-1/2"
+        />
+      </div>
 
       {/* Gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-bg/60 via-bg/40 to-bg" />
@@ -28,7 +26,7 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="text-5xl font-extrabold tracking-tight text-text-heading md:text-7xl"
         >
-          Portfolium
+          Cinematic FPV
         </motion.h1>
         <motion.p
           initial={{ opacity: 0, y: 20 }}
@@ -36,7 +34,7 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.5 }}
           className="mx-auto mt-4 max-w-xl text-lg text-text-body md:text-xl"
         >
-          Cinematic FPV drone footage that tells your story.
+          Drone footage that tells your story.
         </motion.p>
         <motion.a
           href="#work"

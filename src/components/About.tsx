@@ -6,17 +6,21 @@ export default function About() {
   return (
     <section id="about" className="bg-bg px-6 py-24">
       <div className="mx-auto grid max-w-7xl items-center gap-12 md:grid-cols-2">
-        {/* Photo placeholder */}
+        {/* Photo */}
         <motion.div
           initial={{ opacity: 0, x: -30 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="aspect-square overflow-hidden rounded-2xl bg-bg-card"
+          className="flex justify-center md:justify-end"
         >
-          {/* Replace with: <img src="/about-photo.jpg" alt="David Fitzgerald" className="h-full w-full object-cover" /> */}
-          <div className="flex h-full items-center justify-center text-text-body">
-            Your photo here
+          <div className="aspect-[2094/4608] w-full max-w-[320px] overflow-hidden rounded-2xl bg-bg-card">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/profile-pic.jpg"
+            alt="David Fitzgerald"
+            className="h-full w-full object-cover"
+          />
           </div>
         </motion.div>
 
@@ -30,14 +34,13 @@ export default function About() {
             About Me
           </h2>
           <p className="mt-6 text-text-body leading-relaxed">
-            I&apos;m David Fitzgerald, an FPV drone pilot and filmmaker
-            specializing in cinematic aerial footage. From real estate
-            walkthroughs to high-energy event coverage, I create immersive
+            I&apos;m My name is David Fitzgerald, an FPV drone pilot and filmmaker
+            specializing in cinematic aerial footage. I capture immersive
             perspectives that traditional cameras can&apos;t capture.
           </p>
           <p className="mt-4 text-text-body leading-relaxed">
-            With years of experience flying custom-built FPV rigs, I bring a
-            unique combination of technical precision and creative vision to
+            With years of experience flying racing FPV drones and a degree in mechanical engineering, I bring a
+            unique combination of technical precision and know-how to
             every project. Whether it&apos;s threading through tight spaces or
             sweeping across open landscapes, every flight is crafted to tell
             your story.
