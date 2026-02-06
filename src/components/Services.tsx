@@ -57,7 +57,7 @@ export default function Services() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.15 }}
-              className={`relative rounded-xl border p-8 ${
+              className={`relative flex flex-col rounded-xl border p-8 ${
                 service.highlighted
                   ? "border-accent bg-accent/5"
                   : "border-white/10 bg-bg-card"
@@ -77,7 +77,7 @@ export default function Services() {
               <p className="mt-3 text-sm text-text-body">
                 {service.description}
               </p>
-              <ul className="mt-6 space-y-3">
+              <ul className="mt-6 flex-1 space-y-3">
                 {service.features.map((feature) => (
                   <li
                     key={feature}
@@ -91,14 +91,14 @@ export default function Services() {
               {service.price !== null ? (
                 <button
                   onClick={() => handleBookNow(service.id)}
-                  className="mt-8 w-full rounded-lg bg-accent py-3 font-semibold text-white transition-transform hover:scale-105"
+                  className="mt-8 w-full rounded-lg bg-accent py-3.5 text-base font-semibold text-white text-center transition-transform hover:scale-105"
                 >
                   {service.cta}
                 </button>
               ) : (
                 <a
-                  href="#contact?type=custom"
-                  className="mt-8 block w-full rounded-lg border border-accent py-3 text-center font-semibold text-accent transition-colors hover:bg-accent/10"
+                  href="#contact"
+                  className="mt-8 block w-full rounded-lg border border-accent py-3.5 text-center text-base font-semibold text-accent transition-colors hover:bg-accent/10"
                 >
                   {service.cta}
                 </a>
